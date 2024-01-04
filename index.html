@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      class Events {
+        constructor() {
+          this.handlers = {};
+        }
+
+        on(eventName, callback) {
+          this.handlers[eventName] = callback;
+          console.log("On");
+        }
+
+        trigger(eventName) {
+          const timestamp = new Date().toISOString();
+          console.log("Trigger");
+          if (this.handlers[eventName] != null) {
+            this.handlers[eventName]();
+            this.logEvent(eventName, "trigger", timestamp);
+          }
+        }
+
+        off(eventName) {
+          delete this.handlers[eventName];
+          console.log("Off");
+          const timestamp = new Date().toISOString();
+          this.logEvent(eventName, "off", timestamp);
+        }
+
+        async logEvent(eventName, eventAction, timestamp) {
+          console.log("Logging...");
+          const req = {
+            event: eventName,
+            action: eventAction,
+            triggerTime: timestamp,
+          };
+          await fetch("http://localhost:5000/log", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(req),
+          })
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result);
+            });
+        }
+
+        printLogging(event) {
+          console.log("Writing into log file...");
+          fetch("http://localhost:5001/viewlog")
+            .then((response) => response.json())
+            .then((result) => {
+              console.log(result);
+            });
+        }
+      }
+
+      const events = new Events();
+
+      function handleOn() {
+        events.on("click", () => {
+          console.log("Hello");
+        });
+      }
+
+      function handleTrigger() {
+        events.trigger("click");
+      }
+
+      function handleOff() {
+        events.off("click");
+      }
+
+      function handlePrint() {
+        events.printLogging();
+      }
+    </script>
+  </head>
+  <body>
+    <h1>Click the button</h1>
+    <button onclick="handleOn()">On</button>
+    <button onclick="handleTrigger()">Trigger</button>
+    <button onclick="handleOff()">Off</button>
+    <button onclick="handlePrint()">Print Logging</button>
+    <br />
+    <br />
+    <p>Make sure you check the console :)</p>
+  </body>
+</html>
