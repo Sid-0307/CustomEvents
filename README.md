@@ -1,8 +1,8 @@
 ﻿# CustomEvents
 
-Task1 - to create an eventing library with on,trigger and off features. \
-Task2 - to log the trigger and off events on mongoDB \
-Task3 - to create a log file with all the logs on clicking printlogging() \
+* Task1 - to create an eventing library with on,trigger and off features. 
+* Task2 - to log the trigger and off events on mongoDB 
+* Task3 - to create a log file with all the logs on clicking printlogging() 
  
 ![Screenshot 2024-01-05 010652](https://github.com/Sid-0307/CustomEvents/assets/110523312/2096d43c-cef2-4b53-8cf0-d8259f3a6229) \
 \
