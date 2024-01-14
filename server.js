@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 const MongoClient = require("mongodb").MongoClient;
-const uri = `mongodb+srv://siddharthshankar03:Magilam304@cluster0.rgteyqh.mongodb.net/`;
+const uri = ``; //insert mongoDB url
 const client = new MongoClient(uri);
 
 app
